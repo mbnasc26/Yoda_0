@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Yoda Model</title>
+</head>
+<body>
+  <h1>My Yoda Model</h1>
+  <p>The 3D model below should load in Babylon.js:</p>
+
+  <!-- Canvas for rendering the 3D scene -->
+  <canvas id="renderCanvas" style="width: 100%; height: 600px;"></canvas>
+
+  <!-- Babylon.js script -->
+  <script src="https://cdn.babylonjs.com/babylon.js"></script>
+  <script>
+    const canvas = document.getElementById("renderCanvas");
+    const engine = new BABYLON.Engine(canvas, true);
+    const scene = new BABYLON.Scene(engine);
+
+    // Add a basic light to the scene
+    const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+    light.intensity = 0.7;
+
+    // Load the GLB model from GitHub Pages using ImportMesh (specific for .glb files)
+    BABYLON.SceneLoader.ImportMesh("", "", "Yoda.glb", scene, function (meshes) {
+      console.log("Model loaded successfully!");
+      engine.runRenderLoop(() => {
+        scene.render();
+      });
+    }, function (scene, message) {
+      console.error("Error loading model:", message);
+    });
+
+    window.addEventListener("resize", function () {
+      engine.resize();
+    });
+  </script>
+</body>
+</html>
